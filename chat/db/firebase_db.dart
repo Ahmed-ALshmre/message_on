@@ -98,8 +98,20 @@ class FirestoreDb {
       return '';
     }
   }
-
-  static void addUserToChat(NewUserAddToChatModel newUserAddToChatModel) async {
+  static void updateNewMessages(peerId) {
+    Controller _getCon = Get.put(Controller());
+    try {
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(_getCon.userId())
+          .collection('chat')
+          .doc(peerId)
+          .update({
+        'is_new_message': false,
+      });
+    } catch (r) {}
+  }
+  static Future<UserChat>addUserToChat(NewUserAddToChatModel newUserAddToChatModel) async {
     try {
       Controller _getx = Get.put(Controller());
       final peer = await FirebaseFirestore.instance
@@ -137,24 +149,41 @@ class FirestoreDb {
               .collection('chat')
               .doc(_getx.userId.value)
               .set({
-            'id': user['id'],
-            'token': user['token'],
+            'id': peer['id'],
+            'token': peer['token'],
             'block_by': '',
             'show_bot': false,
             'is_blocked': false,
-            'is_provider': user['is_provider'],
+            'is_provider': peer['is_provider'],
             'is_new_message': false,
             'mute': false,
-            'name': user['name'],
-            'photoUrl': user['photoUrl'],
+            'name': peer['name'],
+            'photoUrl': peer['photoUrl'],
             'idProduct': newUserAddToChatModel.idProduct,
             'imageProduct': newUserAddToChatModel.imageProduct,
             'titleProduct': newUserAddToChatModel.titleProduct,
           });
         });
-      } else {}
+      } else {
+        return UserChat.fromJson({});
+      }
+      return UserChat.fromJson({ 'id': user['id'],
+        'token': user['token'],
+        'block_by': '',
+        'show_bot': false,
+        'is_blocked': false,
+        'is_provider': user['is_provider'],
+        'is_new_message': false,
+        'mute': false,
+        'name': user['name'],
+        'photoUrl': user['photoUrl'],
+        'idProduct': newUserAddToChatModel.idProduct,
+        'imageProduct': newUserAddToChatModel.imageProduct,
+        'titleProduct': newUserAddToChatModel.titleProduct,});
     } catch (e) {
       showErrorMessage();
+      return UserChat.fromJson({});
+    
     }
   }
 }
