@@ -49,7 +49,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () async {
-                      Message message = Message(
+                      MessageModel message = MessageModel(
                           type: 0,
                           content: data[index],
                           time: DateTime.now()
@@ -61,7 +61,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       await FirestoreDb.addMessage(
                           message, widget.groupChatId);
                       Future.delayed(Duration(milliseconds: 100));
-                      Message messagePeer = Message(
+                      MessageModel messagePeer = MessageModel(
                           type: 0,
                           content: snapShot.data!['ans'][index],
                           time: DateTime.now()
