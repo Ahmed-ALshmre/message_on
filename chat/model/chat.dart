@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Message {
+class MessageModel {
   late String documentId;
   late int type;
   late String content;
@@ -9,7 +9,7 @@ class Message {
   late String idFrom;
   late String idTo;
 
-  Message({
+  MessageModel({
     required this.type,
     required this.content,
     required this.time,
@@ -17,7 +17,7 @@ class Message {
     required this.idTo,
     required this.isShow,
   });
-  Message.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
+  MessageModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
     documentId = documentSnapshot.id;
     content = documentSnapshot["content"];
     idFrom = documentSnapshot['idFrom'];
