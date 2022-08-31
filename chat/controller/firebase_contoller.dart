@@ -5,8 +5,8 @@ import '../model/chat.dart';
 
 class MessageController extends GetxController {
   RxString geopid = ''.obs;
-  Rx<List<Message>> MessageList = Rx<List<Message>>([]);
-  List<Message> get messages => MessageList.value;
+  Rx<List<MessageModel>> MessageList = Rx<List<MessageModel>>([]);
+  List<MessageModel> get messages => MessageList.value;
 
   @override
   void onReady() {
