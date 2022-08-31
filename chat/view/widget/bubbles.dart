@@ -14,7 +14,7 @@ import '../../utility/utilitiesSize.dart';
 import 'full_image.dart';
 
 class Bubbles extends StatefulWidget {
-  final Message message;
+  final MessageModel message;
   Bubbles({Key? key, required this.message}) : super(key: key);
 
   @override
