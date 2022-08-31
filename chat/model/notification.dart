@@ -1,12 +1,12 @@
 
 
-class Notification {
+class NotificationModel {
   late String content;
   late String peerUserName;
   late String type;
   late String tokePeer;
 
-  Notification({
+  NotificationModel({
     required this.content,
     required this.type,
     required this.peerUserName,
