@@ -5,6 +5,7 @@ import 'package:messages/model/addNewUser.dart';
 import 'package:messages/model/user.dart';
 import '../controller/state_management.dart';
 import '../model/chat.dart';
+import '../utility/widget.dart';
 
 class FirestoreDb {
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -23,7 +24,7 @@ class FirestoreDb {
         Funct.saveState(message.idTo);
       });
     } catch (E) {
-      print(E);
+      showErrorMessage();
     }
   }
 
@@ -32,12 +33,14 @@ class FirestoreDb {
         .collection('messages')
         .doc(groupChatId)
         .collection(groupChatId)
-        .orderBy('timestamp', descending: true).limit(lim)
+        .orderBy('timestamp', descending: true)
+        .limit(lim)
         .snapshots()
         .map((QuerySnapshot query) {
       List<Message> messages = [];
       for (var todo in query.docs) {
-        final messageModel = Message.fromDocumentSnapshot(documentSnapshot: todo);
+        final messageModel =
+            Message.fromDocumentSnapshot(documentSnapshot: todo);
         messages.add(messageModel);
       }
       return messages;
@@ -55,19 +58,23 @@ class FirestoreDb {
   }
 
   static void updateShow(String id, idTo, groupChar, groupChatId) {
-    if (idTo == get.userId()) {
-      FirebaseFirestore.instance
-          .collection('messages')
-          .doc(groupChar)
-          .collection(groupChatId)
-          .doc(id)
-          .update({
-        'isShow': true,
-      });
+    try {
+      if (idTo == get.userId()) {
+        FirebaseFirestore.instance
+            .collection('messages')
+            .doc(groupChar)
+            .collection(groupChatId)
+            .doc(id)
+            .update({
+          'isShow': true,
+        });
+      }
+    } catch (E) {
+      showErrorMessage();
     }
   }
 
-  static Future<String> addNewUser(UserChat userChat) async {
+  static Future<String> initChatScreen(UserChat userChat) async {
     try {
       String id = "";
       final checkUser =
@@ -103,7 +110,7 @@ class FirestoreDb {
           .collection('user')
           .doc(_getx.userId.value)
           .get();
-      if (user.exists) {
+      if (user.exists && peer.exists) {
         FirebaseFirestore.instance
             .collection('user')
             .doc(_getx.userId.value)
@@ -145,9 +152,9 @@ class FirestoreDb {
             'titleProduct': newUserAddToChatModel.titleProduct,
           });
         });
-      }
+      } else {}
     } catch (e) {
-      print(e);
+      showErrorMessage();
     }
   }
 }

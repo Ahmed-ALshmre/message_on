@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:messages/view/room.dart';
 import '../controller/functions.dart';
 import '../controller/state_management.dart';
-import '../db/firebase_db.dart';
 import '../model/user.dart';
 
 import '../utility/widget.dart';
@@ -103,7 +102,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
                                 'لقد حدث خطا تاكد من اتصالك بالنترنيت');
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return lode;
+                              return loading;
                             default:
                               return snapshot.data!.docs.length == 0
                                   ? Center(
@@ -215,7 +214,7 @@ class _ConversationListState extends State<ConversationList> {
                   ),
                 ),
                 SizedBox(
-                  width: 16,
+                  width: 16.w,
                 ),
                 Expanded(
                   child: Container(

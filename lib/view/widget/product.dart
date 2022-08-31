@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:messages/model/addNewUser.dart';
-import '../../shop/product.dart';
 import '../../utility/theme.dart';
 import '../../utility/utilitiesSize.dart';
 
@@ -27,7 +26,7 @@ class ProductChatScreen extends StatelessWidget {
               onTap: () {},
               child: InkWell(
                 onTap: () {
-                  Get.to(() => Product());
+                 // go to the product screen
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

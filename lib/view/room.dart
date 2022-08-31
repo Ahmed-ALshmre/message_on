@@ -3,23 +3,18 @@ import 'dart:io';
 import 'dart:io' as io;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:messages/controller/functions.dart';
 import 'package:messages/model/addNewUser.dart';
-
 import 'package:messages/model/user.dart';
 import 'package:messages/view/setting/setting.dart';
 import 'package:messages/view/widget/Input_message.dart';
 import 'package:messages/view/widget/product.dart';
 import 'package:messages/view/widget/question_screen.dart';
-import 'package:path_provider/path_provider.dart';
 import '../controller/state_management.dart';
 import 'dart:math' as math;
 import 'widget/buildListMessage.dart';
@@ -255,20 +250,6 @@ class ChatScreenState extends State<ChatScreen> {
     }
     controller.gerobId(groupChatId);
   }
-
-
-
-
-
-  Future<String> uploadImage(File file) async {
-    final _firebaseStorage = FirebaseStorage.instance;
-    //Upload to Firebase
-    var snapshot =
-        await _firebaseStorage.ref().child('images/imageName').putFile(file);
-    var downloadUrl = await snapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
   Future<bool> onBackPress() {
     if (!cloStream) {
       setState(() {
