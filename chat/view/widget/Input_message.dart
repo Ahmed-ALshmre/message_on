@@ -9,6 +9,7 @@ import 'package:messages/controller/state_management.dart';
 import 'package:messages/model/user.dart';
 import '../../aude/adue.dart';
 import '../../controller/functions.dart';
+import '../../controller/upload.dart';
 import '../../db/firebase_db.dart';
 import '../../model/chat.dart';
 import '../../utility/theme.dart';
@@ -58,7 +59,7 @@ class _InputMessageState extends State<InputMessage> {
 
   Widget getBottom(Controller controller) {
     return Container(
-      height: 70,
+      height: 66.h,
       width: double.infinity,
       decoration: BoxDecoration(color: grey.withOpacity(0.2)),
       child: Padding(
@@ -73,7 +74,7 @@ class _InputMessageState extends State<InputMessage> {
                       !controller.sendMessageButtomn.value
                           ? InkWell(
                               onTap: () async {
-                                Message message = Message(
+                                MessageModel message = MessageModel(
                                     type: 6,
                                     content: '',
                                     time: DateTime.now()
@@ -93,7 +94,7 @@ class _InputMessageState extends State<InputMessage> {
                           : InkWell(
                               onTap: () async {
                                 if (controller.sizeTextFild.value > 230) {
-                                  Message message = Message(
+                                  MessageModel message = MessageModel(
                                       type: 0,
                                       content: textEditingController.text,
                                       time: DateTime.now()
@@ -124,7 +125,7 @@ class _InputMessageState extends State<InputMessage> {
                         width: 15,
                       ),
                       AnimatedContainer(
-                        duration: Duration(milliseconds: 320),
+                        duration: Duration(milliseconds: 100),
                         width: !controller.recording.value
                             ?  controller.sendMessageButtomn.value ? controller.sizeTextFild.value:200
                             : 230,
@@ -167,7 +168,7 @@ class _InputMessageState extends State<InputMessage> {
                   alignment: Alignment.center,
                   duration: Duration(
                       milliseconds:
-                          controller.sizeTextFild.value >= 220 ? 1 : 800),
+                          controller.sizeTextFild.value >= 220 ? 100 : 800),
                   width:  !controller.sendMessageButtomn.value ? 100.w : 40.w,
                   child:!controller.sendMessageButtomn.value
                       ? Row(
@@ -250,8 +251,8 @@ class _InputMessageState extends State<InputMessage> {
 
   void fileMessage(ImageSource source, Controller controller) async {
     final file = await Funct.getFile(source);
-    String urlImage = ""; // here the funct to uploade file
-    Message message = Message(
+    String urlImage = await UploadFile.serverFile(file, UploadFile.imageRoute);; // here the funct to uploade file
+    MessageModel message = MessageModel(
         type: 0,
         content: urlImage,
         time: DateTime.now().millisecondsSinceEpoch.toString(),
