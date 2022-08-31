@@ -15,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import '../controller/upload.dart';
 import '../db/firebase_db.dart';
+import '../utility/widget.dart';
 
 class Recorder extends StatefulWidget {
   final String? idTo;
@@ -169,8 +170,12 @@ class RecorderState extends State<Recorder> {
 
       if (_current?.duration!.inSeconds.toInt() != 0) {
         String url = await UploadFile.serverFile(file, UploadFile.voiceRoute);
-        _controller.uploadFileLoading(true);
-        onSendMessage(url);
+        if(url.isNotEmpty){
+          _controller.uploadFileLoading(true);
+          onSendMessage(url);
+        }else{
+          showErrorMessage();
+        }
       } else {}
 
       setState(() {
@@ -187,7 +192,7 @@ class RecorderState extends State<Recorder> {
 
   Future<void> onSendMessage(String url) async {
     FirestoreDb.addMessage(
-        Message(
+        MessageModel(
             type: 7,
             content: url,
             time: DateTime.now().millisecondsSinceEpoch.toString(),
