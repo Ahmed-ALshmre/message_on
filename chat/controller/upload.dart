@@ -33,7 +33,5 @@ class UploadFile{
       return "";
     }
   }
-  static sendNotification(Notification notification){
-    /// coll with api firebase
-  }
+
 }
